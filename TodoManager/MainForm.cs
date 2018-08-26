@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TodoList
+namespace TodoManager
 {
     public partial class MainForm : Form
     {

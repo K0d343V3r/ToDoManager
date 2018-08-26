@@ -1,6 +1,6 @@
-﻿namespace TodoList
+﻿namespace TodoManager
 {
-    partial class AddTodoList
+    partial class AddTodo
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this._newNameText = new System.Windows.Forms.TextBox();
+            this._taskText = new System.Windows.Forms.TextBox();
             this._okButton = new System.Windows.Forms.Button();
             this._cancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -39,16 +39,16 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 13);
+            this.label1.Size = new System.Drawing.Size(34, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "New list name:";
+            this.label1.Text = "Task:";
             // 
-            // _newNameText
+            // _taskText
             // 
-            this._newNameText.Location = new System.Drawing.Point(15, 27);
-            this._newNameText.Name = "_newNameText";
-            this._newNameText.Size = new System.Drawing.Size(299, 20);
-            this._newNameText.TabIndex = 1;
+            this._taskText.Location = new System.Drawing.Point(15, 27);
+            this._taskText.Name = "_taskText";
+            this._taskText.Size = new System.Drawing.Size(299, 20);
+            this._taskText.TabIndex = 1;
             // 
             // _okButton
             // 
@@ -70,7 +70,7 @@
             this._cancelButton.Text = "Cancel";
             this._cancelButton.UseVisualStyleBackColor = true;
             // 
-            // AddTodoList
+            // AddTodo
             // 
             this.AcceptButton = this._okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -79,14 +79,14 @@
             this.ClientSize = new System.Drawing.Size(328, 85);
             this.Controls.Add(this._cancelButton);
             this.Controls.Add(this._okButton);
-            this.Controls.Add(this._newNameText);
+            this.Controls.Add(this._taskText);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "AddTodoList";
+            this.Name = "AddTodo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "New Todo List";
+            this.Text = "New Todo";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -95,7 +95,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox _newNameText;
+        private System.Windows.Forms.TextBox _taskText;
         private System.Windows.Forms.Button _okButton;
         private System.Windows.Forms.Button _cancelButton;
     }

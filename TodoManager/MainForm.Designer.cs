@@ -1,4 +1,4 @@
-﻿namespace TodoList
+﻿namespace TodoManager
 {
     partial class MainForm
     {
@@ -91,7 +91,7 @@
             // _addListButton
             // 
             this._addListButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this._addListButton.Image = global::TodoList.Properties.Resources.Add;
+            this._addListButton.Image = global::TodoManager.Properties.Resources.Add;
             this._addListButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._addListButton.Name = "_addListButton";
             this._addListButton.Size = new System.Drawing.Size(23, 22);
@@ -102,7 +102,7 @@
             // 
             this._removeListButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this._removeListButton.Enabled = false;
-            this._removeListButton.Image = global::TodoList.Properties.Resources.Remove;
+            this._removeListButton.Image = global::TodoManager.Properties.Resources.Remove;
             this._removeListButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._removeListButton.Name = "_removeListButton";
             this._removeListButton.Size = new System.Drawing.Size(23, 22);
@@ -136,7 +136,7 @@
             // 
             this._addTodoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this._addTodoButton.Enabled = false;
-            this._addTodoButton.Image = global::TodoList.Properties.Resources.Add;
+            this._addTodoButton.Image = global::TodoManager.Properties.Resources.Add;
             this._addTodoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._addTodoButton.Name = "_addTodoButton";
             this._addTodoButton.Size = new System.Drawing.Size(23, 22);
@@ -147,7 +147,7 @@
             // 
             this._removeTodoButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this._removeTodoButton.Enabled = false;
-            this._removeTodoButton.Image = global::TodoList.Properties.Resources.Remove;
+            this._removeTodoButton.Image = global::TodoManager.Properties.Resources.Remove;
             this._removeTodoButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._removeTodoButton.Name = "_removeTodoButton";
             this._removeTodoButton.Size = new System.Drawing.Size(23, 22);
