@@ -21,6 +21,21 @@ namespace TodoManager
         {
             _model = model;
             InitializeComponent();
+            InitializeTodoGrid();
+        }
+
+        private void InitializeTodoGrid()
+        {
+            _todoGrid.AutoGenerateColumns = false;
+            var column1 = new DataGridViewCheckBoxColumn();
+            column1.DataPropertyName = "Done";
+            column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            _todoGrid.Columns.Add(column1);
+            var column2 = new DataGridViewTextBoxColumn();
+            column2.HeaderText = "Task";
+            column2.DataPropertyName = "Task";
+            column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            _todoGrid.Columns.Add(column2);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -115,11 +130,8 @@ namespace TodoManager
                     else
                     {
                         // bind new data source
-                        var listBox = _todoList as ListBox;
                         var todos = _model.TodoLists[_todoListList.SelectedIndex].Todos;
-                        listBox.DataSource = todos;
-                        listBox.DisplayMember = "Task";
-                        listBox.ValueMember = "Done";
+                        _todoGrid.DataSource = todos;
                         todos.ListChanged += Todos_ListChanged;
                         _addTodoButton.Enabled = true;
                         _removeTodoButton.Enabled = todos.Count > 0;
@@ -138,8 +150,7 @@ namespace TodoManager
         {
             if (e.ListChangedType == ListChangedType.ItemAdded)
             {
-                _todoList.SelectedIndex = -1;
-                _todoList.SelectedIndex = e.NewIndex;
+                _todoGrid.Rows[e.NewIndex].Selected = true;
                _removeTodoButton.Enabled = true;
             }
             else if (e.ListChangedType == ListChangedType.ItemDeleted &&
@@ -153,7 +164,7 @@ namespace TodoManager
         {
             try
             {
-                _model.TodoLists[_todoListList.SelectedIndex].Todos.RemoveAt(_todoList.SelectedIndex);
+                _model.TodoLists[_todoListList.SelectedIndex].Todos.RemoveAt(_todoGrid.CurrentRow.Index);
             }
             catch (Exception ex)
             {
