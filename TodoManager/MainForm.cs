@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,6 @@ namespace TodoManager
     public partial class MainForm : Form
     {
         private MainModel _model;
-        private int _previousTodoListIndex = -1;
 
         public MainForm(MainModel model)
         {
@@ -43,8 +43,7 @@ namespace TodoManager
             try
             {
                 base.OnLoad(e);
-                _todoListList.DataSource = _model.TodoLists;
-                _todoListList.DisplayMember = "Name";
+                _todoListGrid.DataSource = _model.TodoLists;
                 _model.TodoLists.ListChanged += TodoLists_ListChanged;
             }
             catch (Exception ex)
@@ -55,16 +54,36 @@ namespace TodoManager
 
         private void TodoLists_ListChanged(object sender, ListChangedEventArgs e)
         {
+            AdjustGridSelection(_todoListGrid, e);
             if (e.ListChangedType == ListChangedType.ItemAdded)
             {
-                _todoListList.SelectedIndex = -1;
-                _todoListList.SelectedIndex = e.NewIndex;
                 _removeListButton.Enabled = true;
             }
             else if (e.ListChangedType == ListChangedType.ItemDeleted && _model.TodoLists.Count == 0)
             {
                 _removeListButton.Enabled = false;
                 _addTodoButton.Enabled = false;
+            }
+        }
+
+        private void AdjustGridSelection(DataGridView grid, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemAdded)
+            {
+                grid.Rows[e.NewIndex].Selected = true;
+            }
+            else if (e.ListChangedType == ListChangedType.ItemDeleted)
+            {
+                if (grid.Rows.Count > 0)
+                {
+                    // select last in list if last item was removed
+                    int index = e.NewIndex < grid.Rows.Count ? e.NewIndex : grid.Rows.Count - 1;
+                    grid.Rows[index].Selected = true;
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Unrecognized list change type.");
             }
         }
 
@@ -89,14 +108,28 @@ namespace TodoManager
             try
             {
                 // disconnect current todo list handler
-                _model.TodoLists[_todoListList.SelectedIndex].Todos.ListChanged -= Todos_ListChanged;
+                int index = GetSelectedRowIndex(_todoListGrid);
+                _model.TodoLists[index].Todos.ListChanged -= Todos_ListChanged;
 
                 // and remove todo list
-                _model.TodoLists.RemoveAt(_todoListList.SelectedIndex);
+                _model.TodoLists.RemoveAt(index);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private int GetSelectedRowIndex(DataGridView grid)
+        {
+            Debug.Assert(grid.SelectionMode == DataGridViewSelectionMode.FullRowSelect);
+            if (grid.SelectedRows.Count == 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return grid.SelectedRows[0].Index;
             }
         }
 
@@ -107,37 +140,7 @@ namespace TodoManager
                 var dialog = new AddTodo();
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    _model.TodoLists[_todoListList.SelectedIndex].Todos.Add(new Todo(dialog.Task));
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void _todoListList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (_todoListList.SelectedIndex >= 0 &&
-                    _todoListList.SelectedIndex != _previousTodoListIndex)
-                {
-                    if (_todoListList.Items.Count == 0)
-                    {
-                        _removeTodoButton.Enabled = false;
-                    }
-                    else
-                    {
-                        // bind new data source
-                        var todos = _model.TodoLists[_todoListList.SelectedIndex].Todos;
-                        _todoGrid.DataSource = todos;
-                        todos.ListChanged += Todos_ListChanged;
-                        _addTodoButton.Enabled = true;
-                        _removeTodoButton.Enabled = todos.Count > 0;
-                        _removeListButton.Enabled = true;
-                    }
-                    _previousTodoListIndex = _todoListList.SelectedIndex;
+                    _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Todos.Add(new Todo(dialog.Task));
                 }
             }
             catch (Exception ex)
@@ -148,13 +151,13 @@ namespace TodoManager
 
         private void Todos_ListChanged(object sender, ListChangedEventArgs e)
         {
+            AdjustGridSelection(_todoGrid, e);
             if (e.ListChangedType == ListChangedType.ItemAdded)
             {
-                _todoGrid.Rows[e.NewIndex].Selected = true;
                _removeTodoButton.Enabled = true;
             }
             else if (e.ListChangedType == ListChangedType.ItemDeleted &&
-                _model.TodoLists[_todoListList.SelectedIndex].Todos.Count == 0)
+                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Todos.Count == 0)
             {
                 _removeTodoButton.Enabled = false;
             }
@@ -164,7 +167,36 @@ namespace TodoManager
         {
             try
             {
-                _model.TodoLists[_todoListList.SelectedIndex].Todos.RemoveAt(_todoGrid.CurrentRow.Index);
+                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Todos.RemoveAt(GetSelectedRowIndex(_todoGrid));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void _todoListGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_todoListGrid.Rows.Count == 0)
+                {
+                    _removeTodoButton.Enabled = false;
+                }
+                else
+                {
+                    int index = GetSelectedRowIndex(_todoListGrid);
+                    if (index >= 0)
+                    {
+                        // bind new data source
+                        var todos = _model.TodoLists[index].Todos;
+                        _todoGrid.DataSource = todos;
+                        todos.ListChanged += Todos_ListChanged;
+                        _addTodoButton.Enabled = true;
+                        _removeTodoButton.Enabled = todos.Count > 0;
+                        _removeListButton.Enabled = true;
+                    }
+                }
             }
             catch (Exception ex)
             {

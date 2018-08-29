@@ -29,21 +29,22 @@
         private void InitializeComponent()
         {
             this._splitContainer = new System.Windows.Forms.SplitContainer();
-            this._todoListList = new System.Windows.Forms.ListBox();
             this._listToolbar = new System.Windows.Forms.ToolStrip();
             this._addListButton = new System.Windows.Forms.ToolStripButton();
             this._removeListButton = new System.Windows.Forms.ToolStripButton();
+            this._todoGrid = new System.Windows.Forms.DataGridView();
             this._todoToolbar = new System.Windows.Forms.ToolStrip();
             this._addTodoButton = new System.Windows.Forms.ToolStripButton();
             this._removeTodoButton = new System.Windows.Forms.ToolStripButton();
-            this._todoGrid = new System.Windows.Forms.DataGridView();
+            this._todoListGrid = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this._splitContainer)).BeginInit();
             this._splitContainer.Panel1.SuspendLayout();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
             this._listToolbar.SuspendLayout();
-            this._todoToolbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._todoGrid)).BeginInit();
+            this._todoToolbar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._todoListGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // _splitContainer
@@ -54,7 +55,7 @@
             // 
             // _splitContainer.Panel1
             // 
-            this._splitContainer.Panel1.Controls.Add(this._todoListList);
+            this._splitContainer.Panel1.Controls.Add(this._todoListGrid);
             this._splitContainer.Panel1.Controls.Add(this._listToolbar);
             // 
             // _splitContainer.Panel2
@@ -64,17 +65,6 @@
             this._splitContainer.Size = new System.Drawing.Size(800, 450);
             this._splitContainer.SplitterDistance = 200;
             this._splitContainer.TabIndex = 0;
-            // 
-            // _todoListList
-            // 
-            this._todoListList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._todoListList.FormattingEnabled = true;
-            this._todoListList.IntegralHeight = false;
-            this._todoListList.Location = new System.Drawing.Point(0, 0);
-            this._todoListList.Name = "_todoListList";
-            this._todoListList.Size = new System.Drawing.Size(200, 425);
-            this._todoListList.TabIndex = 1;
-            this._todoListList.SelectedIndexChanged += new System.EventHandler(this._todoListList_SelectedIndexChanged);
             // 
             // _listToolbar
             // 
@@ -109,6 +99,22 @@
             this._removeListButton.Size = new System.Drawing.Size(23, 22);
             this._removeListButton.Text = "toolStripButton1";
             this._removeListButton.Click += new System.EventHandler(this._removeListButton_Click);
+            // 
+            // _todoGrid
+            // 
+            this._todoGrid.AllowUserToAddRows = false;
+            this._todoGrid.AllowUserToDeleteRows = false;
+            this._todoGrid.AllowUserToResizeRows = false;
+            this._todoGrid.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this._todoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._todoGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._todoGrid.Location = new System.Drawing.Point(0, 0);
+            this._todoGrid.MultiSelect = false;
+            this._todoGrid.Name = "_todoGrid";
+            this._todoGrid.RowHeadersVisible = false;
+            this._todoGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this._todoGrid.Size = new System.Drawing.Size(596, 425);
+            this._todoGrid.TabIndex = 1;
             // 
             // _todoToolbar
             // 
@@ -145,21 +151,24 @@
             this._removeTodoButton.Text = "toolStripButton1";
             this._removeTodoButton.Click += new System.EventHandler(this._removeTodoButton_Click);
             // 
-            // _todoGrid
+            // _todoListGrid
             // 
-            this._todoGrid.AllowUserToAddRows = false;
-            this._todoGrid.AllowUserToDeleteRows = false;
-            this._todoGrid.AllowUserToResizeRows = false;
-            this._todoGrid.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this._todoGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this._todoGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._todoGrid.Location = new System.Drawing.Point(0, 0);
-            this._todoGrid.MultiSelect = false;
-            this._todoGrid.Name = "_todoGrid";
-            this._todoGrid.RowHeadersVisible = false;
-            this._todoGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this._todoGrid.Size = new System.Drawing.Size(596, 425);
-            this._todoGrid.TabIndex = 1;
+            this._todoListGrid.AllowUserToAddRows = false;
+            this._todoListGrid.AllowUserToDeleteRows = false;
+            this._todoListGrid.AllowUserToResizeRows = false;
+            this._todoListGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this._todoListGrid.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this._todoListGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._todoListGrid.ColumnHeadersVisible = false;
+            this._todoListGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._todoListGrid.Location = new System.Drawing.Point(0, 0);
+            this._todoListGrid.MultiSelect = false;
+            this._todoListGrid.Name = "_todoListGrid";
+            this._todoListGrid.RowHeadersVisible = false;
+            this._todoListGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this._todoListGrid.Size = new System.Drawing.Size(200, 425);
+            this._todoListGrid.TabIndex = 1;
+            this._todoListGrid.SelectionChanged += new System.EventHandler(this._todoListGrid_SelectionChanged);
             // 
             // MainForm
             // 
@@ -178,9 +187,10 @@
             this._splitContainer.ResumeLayout(false);
             this._listToolbar.ResumeLayout(false);
             this._listToolbar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._todoGrid)).EndInit();
             this._todoToolbar.ResumeLayout(false);
             this._todoToolbar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._todoGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._todoListGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -190,11 +200,11 @@
         private System.Windows.Forms.SplitContainer _splitContainer;
         private System.Windows.Forms.ToolStrip _listToolbar;
         private System.Windows.Forms.ToolStrip _todoToolbar;
-        private System.Windows.Forms.ListBox _todoListList;
         private System.Windows.Forms.ToolStripButton _addListButton;
         private System.Windows.Forms.ToolStripButton _addTodoButton;
         private System.Windows.Forms.ToolStripButton _removeListButton;
         private System.Windows.Forms.ToolStripButton _removeTodoButton;
         private System.Windows.Forms.DataGridView _todoGrid;
+        private System.Windows.Forms.DataGridView _todoListGrid;
     }
 }
