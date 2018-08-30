@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TodoManager.Extensions;
 
 namespace TodoManager
 {
@@ -22,6 +23,8 @@ namespace TodoManager
             _model = model;
             InitializeComponent();
             InitializeTodoGrid();
+            _todoToolbar.MakeTransparent();
+            _listToolbar.MakeTransparent();
         }
 
         private void InitializeTodoGrid()

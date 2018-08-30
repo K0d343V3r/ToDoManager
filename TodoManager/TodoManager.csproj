@@ -59,6 +59,8 @@
     <Compile Include="AddTodoList.Designer.cs">
       <DependentUpon>AddTodoList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\ToolStripTransparentRenderer.cs" />
+    <Compile Include="Extensions\ToolStripExtensions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
