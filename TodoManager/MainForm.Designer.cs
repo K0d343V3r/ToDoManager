@@ -33,22 +33,26 @@
             this._listToolbar = new System.Windows.Forms.ToolStrip();
             this._addListButton = new System.Windows.Forms.ToolStripButton();
             this._removeListButton = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
             this._todoGrid = new System.Windows.Forms.DataGridView();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this._todoToolbar = new System.Windows.Forms.ToolStrip();
             this._addTodoButton = new System.Windows.Forms.ToolStripButton();
             this._removeTodoButton = new System.Windows.Forms.ToolStripButton();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this._titleLabel = new System.Windows.Forms.Label();
+            this._dateLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this._splitContainer)).BeginInit();
             this._splitContainer.Panel1.SuspendLayout();
             this._splitContainer.Panel2.SuspendLayout();
             this._splitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._todoListGrid)).BeginInit();
             this._listToolbar.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._todoGrid)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this._todoToolbar.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _splitContainer
@@ -123,15 +127,6 @@
             this._removeListButton.Text = "toolStripButton1";
             this._removeListButton.Click += new System.EventHandler(this._removeListButton_Click);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this._todoGrid);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 60);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(596, 390);
-            this.panel1.TabIndex = 3;
-            // 
             // _todoGrid
             // 
             this._todoGrid.AllowUserToAddRows = false;
@@ -147,21 +142,6 @@
             this._todoGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this._todoGrid.Size = new System.Drawing.Size(596, 390);
             this._todoGrid.TabIndex = 1;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this._todoToolbar, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(596, 60);
-            this.tableLayoutPanel1.TabIndex = 2;
             // 
             // _todoToolbar
             // 
@@ -199,6 +179,63 @@
             this._removeTodoButton.Text = "toolStripButton1";
             this._removeTodoButton.Click += new System.EventHandler(this._removeTodoButton_Click);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this._todoToolbar, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(596, 60);
+            this.tableLayoutPanel1.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this._dateLabel);
+            this.panel2.Controls.Add(this._titleLabel);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(541, 54);
+            this.panel2.TabIndex = 1;
+            // 
+            // _titleLabel
+            // 
+            this._titleLabel.AutoSize = true;
+            this._titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._titleLabel.ForeColor = System.Drawing.Color.White;
+            this._titleLabel.Location = new System.Drawing.Point(0, 5);
+            this._titleLabel.Name = "_titleLabel";
+            this._titleLabel.Size = new System.Drawing.Size(97, 29);
+            this._titleLabel.TabIndex = 0;
+            this._titleLabel.Text = "My Day";
+            // 
+            // _dateLabel
+            // 
+            this._dateLabel.AutoSize = true;
+            this._dateLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._dateLabel.ForeColor = System.Drawing.Color.White;
+            this._dateLabel.Location = new System.Drawing.Point(3, 36);
+            this._dateLabel.Name = "_dateLabel";
+            this._dateLabel.Size = new System.Drawing.Size(109, 15);
+            this._dateLabel.TabIndex = 1;
+            this._dateLabel.Text = "Friday, August 31st";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this._todoGrid);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 60);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(596, 390);
+            this.panel1.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -216,12 +253,14 @@
             ((System.ComponentModel.ISupportInitialize)(this._todoListGrid)).EndInit();
             this._listToolbar.ResumeLayout(false);
             this._listToolbar.PerformLayout();
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._todoGrid)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this._todoToolbar.ResumeLayout(false);
             this._todoToolbar.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -238,6 +277,9 @@
         private System.Windows.Forms.DataGridView _todoGrid;
         private System.Windows.Forms.DataGridView _todoListGrid;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label _dateLabel;
+        private System.Windows.Forms.Label _titleLabel;
         private System.Windows.Forms.Panel panel1;
     }
 }

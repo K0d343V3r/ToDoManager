@@ -25,6 +25,21 @@ namespace TodoManager
             InitializeTodoGrid();
             _todoToolbar.MakeTransparent();
             _listToolbar.MakeTransparent();
+            ShowDateInfo(false);
+        }
+
+        private void ShowDateInfo(bool show)
+        {
+            if (show)
+            {
+                _dateLabel.Visible = true;
+                _titleLabel.Location = new Point(_titleLabel.Left, _titleLabel.Top - _dateLabel.Height);
+            }
+            else
+            {
+                _dateLabel.Visible = false;
+                _titleLabel.Location = new Point(_titleLabel.Left, _titleLabel.Top + _dateLabel.Height);
+            }
         }
 
         private void InitializeTodoGrid()
