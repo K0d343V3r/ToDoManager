@@ -25,21 +25,7 @@ namespace TodoManager
             InitializeTodoGrid();
             _todoToolbar.MakeTransparent();
             _listToolbar.MakeTransparent();
-            ShowDateInfo(false);
-        }
-
-        private void ShowDateInfo(bool show)
-        {
-            if (show)
-            {
-                _dateLabel.Visible = true;
-                _titleLabel.Location = new Point(_titleLabel.Left, _titleLabel.Top - _dateLabel.Height);
-            }
-            else
-            {
-                _dateLabel.Visible = false;
-                _titleLabel.Location = new Point(_titleLabel.Left, _titleLabel.Top + _dateLabel.Height);
-            }
+            _todoBanner.Title = Properties.Resources.TXT_No_Todo_Lists;
         }
 
         private void InitializeTodoGrid()
@@ -197,23 +183,26 @@ namespace TodoManager
         {
             try
             {
-                if (_todoListGrid.Rows.Count == 0)
+                int index = GetSelectedRowIndex(_todoListGrid);
+                if (_todoListGrid.Rows.Count == 0 || index < 0)
                 {
                     _removeTodoButton.Enabled = false;
+                    _todoBanner.Title = Properties.Resources.TXT_No_Todo_Lists;
                 }
                 else
                 {
-                    int index = GetSelectedRowIndex(_todoListGrid);
-                    if (index >= 0)
-                    {
-                        // bind new data source
-                        var todos = _model.TodoLists[index].Todos;
-                        _todoGrid.DataSource = todos;
-                        todos.ListChanged += Todos_ListChanged;
-                        _addTodoButton.Enabled = true;
-                        _removeTodoButton.Enabled = todos.Count > 0;
-                        _removeListButton.Enabled = true;
-                    }
+                    // rebind new data source
+                    var todos = _model.TodoLists[index].Todos;
+                    _todoGrid.DataSource = todos;
+                    todos.ListChanged += Todos_ListChanged;
+
+                    // adjust toolbar buttons
+                    _addTodoButton.Enabled = true;
+                    _removeTodoButton.Enabled = todos.Count > 0;
+                    _removeListButton.Enabled = true;
+                    
+                    // and update title
+                    _todoBanner.Title = _model.TodoLists[index].Name;
                 }
             }
             catch (Exception ex)

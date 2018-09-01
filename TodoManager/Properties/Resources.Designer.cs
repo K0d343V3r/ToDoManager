@@ -79,5 +79,23 @@ namespace TodoManager.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Day.
+        /// </summary>
+        internal static string TXT_Banner_Title {
+            get {
+                return ResourceManager.GetString("TXT_Banner_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Lists.
+        /// </summary>
+        internal static string TXT_No_Todo_Lists {
+            get {
+                return ResourceManager.GetString("TXT_No_Todo_Lists", resourceCulture);
+            }
+        }
     }
 }
