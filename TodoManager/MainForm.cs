@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TodoManager.Extensions;
+using TodoManager.Models;
+using TodoManager.Proxies;
 
 namespace TodoManager
 {
@@ -22,24 +16,32 @@ namespace TodoManager
         {
             _model = model;
             InitializeComponent();
-            InitializeTodoGrid();
+            InitializeTodoGrids();
             _todoToolbar.MakeTransparent();
             _listToolbar.MakeTransparent();
             _todoBanner.Title = Properties.Resources.TXT_No_Todo_Lists;
         }
 
-        private void InitializeTodoGrid()
+        private void InitializeTodoGrids()
         {
+            // initialize todo list grid
+            _todoListGrid.AutoGenerateColumns = false;
+            var column1 = new DataGridViewTextBoxColumn();
+            column1.DataPropertyName = "Name";
+            column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            _todoListGrid.Columns.Add(column1);
+
+            // initialize todo list item grid
             _todoGrid.AutoGenerateColumns = false;
-            var column1 = new DataGridViewCheckBoxColumn();
-            column1.DataPropertyName = "Done";
-            column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            _todoGrid.Columns.Add(column1);
-            var column2 = new DataGridViewTextBoxColumn();
-            column2.HeaderText = "Task";
-            column2.DataPropertyName = "Task";
-            column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            var column2 = new DataGridViewCheckBoxColumn();
+            column2.DataPropertyName = "Done";
+            column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             _todoGrid.Columns.Add(column2);
+            var column3 = new DataGridViewTextBoxColumn();
+            column3.HeaderText = "Task";
+            column3.DataPropertyName = "Task";
+            column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            _todoGrid.Columns.Add(column3);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -113,7 +115,7 @@ namespace TodoManager
             {
                 // disconnect current todo list handler
                 int index = GetSelectedRowIndex(_todoListGrid);
-                _model.TodoLists[index].Todos.ListChanged -= Todos_ListChanged;
+                _model.TodoLists[index].Items.ListChanged -= Todos_ListChanged;
 
                 // and remove todo list
                 _model.TodoLists.RemoveAt(index);
@@ -144,7 +146,7 @@ namespace TodoManager
                 var dialog = new AddTodo();
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Todos.Add(new Todo(dialog.Task));
+                    _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Items.Add(new TodoListItem(dialog.Task));
                 }
             }
             catch (Exception ex)
@@ -161,7 +163,7 @@ namespace TodoManager
                _removeTodoButton.Enabled = true;
             }
             else if (e.ListChangedType == ListChangedType.ItemDeleted &&
-                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Todos.Count == 0)
+                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Items.Count == 0)
             {
                 _removeTodoButton.Enabled = false;
             }
@@ -171,7 +173,7 @@ namespace TodoManager
         {
             try
             {
-                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Todos.RemoveAt(GetSelectedRowIndex(_todoGrid));
+                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Items.RemoveAt(GetSelectedRowIndex(_todoGrid));
             }
             catch (Exception ex)
             {
@@ -192,7 +194,7 @@ namespace TodoManager
                 else
                 {
                     // rebind new data source
-                    var todos = _model.TodoLists[index].Todos;
+                    var todos = _model.TodoLists[index].Items;
                     _todoGrid.DataSource = todos;
                     todos.ListChanged += Todos_ListChanged;
 

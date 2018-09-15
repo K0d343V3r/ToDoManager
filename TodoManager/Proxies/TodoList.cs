@@ -5,22 +5,16 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using TodoManager.Models;
 
-namespace TodoManager
+namespace TodoManager.Proxies
 {
-    [DataContract]
-    public class TodoList
+    public partial class TodoList
     {
-        [DataMember]
-        public string Name { get; private set; }
-
-        [DataMember]
-        public BindingList<Todo> Todos { get; private set; }
-
         public TodoList(string name)
         {
             Name = name;
-            Todos = new BindingList<Todo>();
+            Items = new PersistentBindingList<TodoListItem>();
         }
     }
 }

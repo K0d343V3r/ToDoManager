@@ -7,8 +7,9 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using TodoManager.Proxies;
 
-namespace TodoManager
+namespace TodoManager.Models
 {
     [DataContract]
     public class MainModel
