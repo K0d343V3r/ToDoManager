@@ -30,7 +30,7 @@ namespace TodoManager
             }
             set
             {
-                ParameterValidator.ValidateString(value, false);
+                ParameterValidator.CheckString(value, "Title", false);
                 _titleLabel.Text = value;
                 AdjustLabels(false);
             }

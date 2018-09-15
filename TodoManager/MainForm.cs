@@ -115,7 +115,7 @@ namespace TodoManager
             {
                 // disconnect current todo list handler
                 int index = GetSelectedRowIndex(_todoListGrid);
-                _model.TodoLists[index].Items.ListChanged -= Todos_ListChanged;
+                _model.TodoLists[index].BindableItems.ListChanged -= Todos_ListChanged;
 
                 // and remove todo list
                 _model.TodoLists.RemoveAt(index);
@@ -146,7 +146,7 @@ namespace TodoManager
                 var dialog = new AddTodo();
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Items.Add(new TodoListItem(dialog.Task));
+                    _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.Add(new TodoListItem(dialog.Task));
                 }
             }
             catch (Exception ex)
@@ -163,7 +163,7 @@ namespace TodoManager
                _removeTodoButton.Enabled = true;
             }
             else if (e.ListChangedType == ListChangedType.ItemDeleted &&
-                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Items.Count == 0)
+                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.Count == 0)
             {
                 _removeTodoButton.Enabled = false;
             }
@@ -173,7 +173,7 @@ namespace TodoManager
         {
             try
             {
-                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].Items.RemoveAt(GetSelectedRowIndex(_todoGrid));
+                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.RemoveAt(GetSelectedRowIndex(_todoGrid));
             }
             catch (Exception ex)
             {
@@ -194,7 +194,7 @@ namespace TodoManager
                 else
                 {
                     // rebind new data source
-                    var todos = _model.TodoLists[index].Items;
+                    var todos = _model.TodoLists[index].BindableItems;
                     _todoGrid.DataSource = todos;
                     todos.ListChanged += Todos_ListChanged;
 

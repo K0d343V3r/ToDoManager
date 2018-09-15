@@ -1149,19 +1149,68 @@ namespace TodoManager.Proxies
 
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.10.72.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class TodoListItem
+    public partial class TodoListItem : System.ComponentModel.INotifyPropertyChanged
     {
+        private long _id;
+        private string _task;
+        private bool _done;
+        private long _todoListId;
+
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
-        public long Id { get; set; }
+        public long Id
+        {
+            get { return _id; }
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         [Newtonsoft.Json.JsonProperty("task", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Task { get; set; }
+        public string Task
+        {
+            get { return _task; }
+            set
+            {
+                if (_task != value)
+                {
+                    _task = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         [Newtonsoft.Json.JsonProperty("done", Required = Newtonsoft.Json.Required.Always)]
-        public bool Done { get; set; }
+        public bool Done
+        {
+            get { return _done; }
+            set
+            {
+                if (_done != value)
+                {
+                    _done = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         [Newtonsoft.Json.JsonProperty("todoListId", Required = Newtonsoft.Json.Required.Always)]
-        public long TodoListId { get; set; }
+        public long TodoListId
+        {
+            get { return _todoListId; }
+            set
+            {
+                if (_todoListId != value)
+                {
+                    _todoListId = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public string ToJson()
         {
@@ -1173,19 +1222,65 @@ namespace TodoManager.Proxies
             return Newtonsoft.Json.JsonConvert.DeserializeObject<TodoListItem>(data);
         }
 
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "9.10.72.0 (Newtonsoft.Json v9.0.0.0)")]
-    public partial class TodoList
+    public partial class TodoList : System.ComponentModel.INotifyPropertyChanged
     {
+        private long _id;
+        private string _name;
+        private System.Collections.ObjectModel.ObservableCollection<TodoListItem> _items;
+
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
-        public long Id { get; set; }
+        public long Id
+        {
+            get { return _id; }
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         [Newtonsoft.Json.JsonProperty("items", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public TodoManager.Models.PersistentBindingList<TodoListItem> Items { get; set; }
+        public System.Collections.ObjectModel.ObservableCollection<TodoListItem> Items
+        {
+            get { return _items; }
+            set
+            {
+                if (_items != value)
+                {
+                    _items = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public string ToJson()
         {
@@ -1195,6 +1290,15 @@ namespace TodoManager.Proxies
         public static TodoList FromJson(string data)
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<TodoList>(data);
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
         }
 
     }

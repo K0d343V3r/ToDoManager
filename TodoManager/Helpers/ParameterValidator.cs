@@ -8,18 +8,26 @@ namespace TodoManager.Helpers
 {
     public static class ParameterValidator
     {
-        public static void ValidateString(string parameter, bool allowEmpty = true)
+        public static void CheckNull(object value, string parameterName)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(parameterName, "Parameter is null.");
+            }
+        }
+
+        public static void CheckString(string value, string parameterName, bool allowEmpty = true)
         {
             if (!allowEmpty)
             {
-                if (parameter == null)
+                if (value == null)
                 {
-                    throw new ArgumentOutOfRangeException("parameter", "Parameter is null.");
+                    throw new ArgumentOutOfRangeException(parameterName, "Parameter is null.");
                 }
             }
-            else if (string.IsNullOrEmpty(parameter))
+            else if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentOutOfRangeException("parameter", "Parameter is null or empty.");
+                throw new ArgumentOutOfRangeException(parameterName, "Parameter is null or empty.");
             }
         }
     }

@@ -73,7 +73,9 @@
     </Compile>
     <Compile Include="Models\MainModel.cs" />
     <Compile Include="Models\PersistentBindingList.cs" />
-    <Compile Include="Persistence\IPersistenceStore.cs" />
+    <Compile Include="Models\TodoListBindingList.cs" />
+    <Compile Include="Models\TodoListItemBindingList.cs" />
+    <Compile Include="Proxies\HttpClient.cs" />
     <Compile Include="Proxies\TodoApiProxies.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
