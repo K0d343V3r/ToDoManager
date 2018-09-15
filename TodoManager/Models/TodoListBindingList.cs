@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TodoManager.Helpers;
 using TodoManager.Proxies;
 
 namespace TodoManager.Models
@@ -10,6 +11,16 @@ namespace TodoManager.Models
     public class TodoListBindingList : PersistentBindingList<TodoList>
     {
         private TodoListsProxy _proxy = new TodoListsProxy(HttpClient.Instance);
+
+        public TodoListBindingList(IList<TodoList> lists)
+        {
+            ParameterValidator.CheckNull(lists, "lists");
+            foreach (var list in lists)
+            {
+                list.BindableItems = new TodoListItemBindingList(list.Id, list.Items);
+                Items.Add(list);
+            }
+        }
 
         protected override async Task<TodoList> AddToStoreAsync(TodoList item)  
         {

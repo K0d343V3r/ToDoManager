@@ -14,11 +14,18 @@ namespace TodoManager.Models
 {
     public class MainModel
     {
-        public PersistentBindingList<TodoList> TodoLists { get; private set;  }
+        public TodoListBindingList BindableLists { get; private set; }
 
-        public MainModel()
+        private MainModel(IList<TodoList> lists)
         {
-            TodoLists = new TodoListBindingList();
+            BindableLists = new TodoListBindingList(lists);
+        }
+
+        public static async Task<MainModel> CreateAsync()
+        {
+            var proxy = new TodoListsProxy(HttpClient.Instance);
+            var lists = await proxy.GetAllListsAsync();
+            return new MainModel(lists);
         }
     }
 }

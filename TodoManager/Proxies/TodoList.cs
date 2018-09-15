@@ -11,12 +11,12 @@ namespace TodoManager.Proxies
 {
     public partial class TodoList
     {
-        public PersistentBindingList<TodoListItem> BindableItems { get; set; }
+        public TodoListItemBindingList BindableItems { get; set; }
 
         public TodoList(string name)
         {
             Name = name;
-            BindableItems = new PersistentBindingList<TodoListItem>();
+            BindableItems = new TodoListItemBindingList();
         }
     }
 }

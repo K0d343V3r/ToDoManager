@@ -49,8 +49,8 @@ namespace TodoManager
             try
             {
                 base.OnLoad(e);
-                _todoListGrid.DataSource = _model.TodoLists;
-                _model.TodoLists.ListChanged += TodoLists_ListChanged;
+                _todoListGrid.DataSource = _model.BindableLists;
+                _model.BindableLists.ListChanged += TodoLists_ListChanged;
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace TodoManager
             {
                 _removeListButton.Enabled = true;
             }
-            else if (e.ListChangedType == ListChangedType.ItemDeleted && _model.TodoLists.Count == 0)
+            else if (e.ListChangedType == ListChangedType.ItemDeleted && _model.BindableLists.Count == 0)
             {
                 _removeListButton.Enabled = false;
                 _addTodoButton.Enabled = false;
@@ -100,7 +100,7 @@ namespace TodoManager
                 var dialog = new AddTodoList();
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    _model.TodoLists.Add(new TodoList(dialog.NewName));
+                    _model.BindableLists.Add(new TodoList(dialog.NewName));
                 }
             }
             catch (Exception ex)
@@ -115,10 +115,10 @@ namespace TodoManager
             {
                 // disconnect current todo list handler
                 int index = GetSelectedRowIndex(_todoListGrid);
-                _model.TodoLists[index].BindableItems.ListChanged -= Todos_ListChanged;
+                _model.BindableLists[index].BindableItems.ListChanged -= Todos_ListChanged;
 
                 // and remove todo list
-                _model.TodoLists.RemoveAt(index);
+                _model.BindableLists.RemoveAt(index);
             }
             catch (Exception ex)
             {
@@ -146,7 +146,7 @@ namespace TodoManager
                 var dialog = new AddTodo();
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.Add(new TodoListItem(dialog.Task));
+                    _model.BindableLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.Add(new TodoListItem(dialog.Task));
                 }
             }
             catch (Exception ex)
@@ -163,7 +163,7 @@ namespace TodoManager
                _removeTodoButton.Enabled = true;
             }
             else if (e.ListChangedType == ListChangedType.ItemDeleted &&
-                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.Count == 0)
+                _model.BindableLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.Count == 0)
             {
                 _removeTodoButton.Enabled = false;
             }
@@ -173,7 +173,7 @@ namespace TodoManager
         {
             try
             {
-                _model.TodoLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.RemoveAt(GetSelectedRowIndex(_todoGrid));
+                _model.BindableLists[GetSelectedRowIndex(_todoListGrid)].BindableItems.RemoveAt(GetSelectedRowIndex(_todoGrid));
             }
             catch (Exception ex)
             {
@@ -194,7 +194,7 @@ namespace TodoManager
                 else
                 {
                     // rebind new data source
-                    var todos = _model.TodoLists[index].BindableItems;
+                    var todos = _model.BindableLists[index].BindableItems;
                     _todoGrid.DataSource = todos;
                     todos.ListChanged += Todos_ListChanged;
 
@@ -204,7 +204,7 @@ namespace TodoManager
                     _removeListButton.Enabled = true;
                     
                     // and update title
-                    _todoBanner.Title = _model.TodoLists[index].Name;
+                    _todoBanner.Title = _model.BindableLists[index].Name;
                 }
             }
             catch (Exception ex)

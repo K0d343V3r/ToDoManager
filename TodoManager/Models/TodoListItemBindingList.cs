@@ -12,6 +12,10 @@ namespace TodoManager.Models
         private long _todoListId;
         private TodoItemsProxy _proxy = new TodoItemsProxy(HttpClient.Instance);
 
+        public TodoListItemBindingList()
+        {
+        }
+
         public TodoListItemBindingList(long todoListId, IList<TodoListItem> items)
         {
             _todoListId = todoListId;
