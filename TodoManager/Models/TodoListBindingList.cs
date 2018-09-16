@@ -13,12 +13,11 @@ namespace TodoManager.Models
         private TodoListsProxy _proxy = new TodoListsProxy(HttpClient.Instance);
 
         public TodoListBindingList(IList<TodoList> lists)
+            : base(lists)
         {
-            ParameterValidator.CheckNull(lists, "lists");
-            foreach (var list in lists)
+            foreach (var item in Items)
             {
-                list.BindableItems = new TodoListItemBindingList(list.Id, list.Items);
-                Items.Add(list);
+                item.BindableItems = new TodoListItemBindingList(item.Id, item.Items);
             }
         }
 
@@ -38,6 +37,11 @@ namespace TodoManager.Models
         {
             var ids = Items.Select(item => item.Id).ToList();
             await _proxy.DeleteListsAsync(ids);
+        }
+
+        protected override async Task UpdateStoreAsync(TodoList item)
+        {
+            var result = await _proxy.UpdateListAsync(item.Id, item);
         }
     }
 }

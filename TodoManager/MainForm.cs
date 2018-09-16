@@ -26,21 +26,27 @@ namespace TodoManager
         {
             // initialize todo list grid
             _todoListGrid.AutoGenerateColumns = false;
-            var column1 = new DataGridViewTextBoxColumn();
-            column1.DataPropertyName = "Name";
-            column1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            var column1 = new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Name",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            };
             _todoListGrid.Columns.Add(column1);
 
             // initialize todo list item grid
             _todoGrid.AutoGenerateColumns = false;
-            var column2 = new DataGridViewCheckBoxColumn();
-            column2.DataPropertyName = "Done";
-            column2.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            var column2 = new DataGridViewCheckBoxColumn
+            {
+                DataPropertyName = "Done",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            };
             _todoGrid.Columns.Add(column2);
-            var column3 = new DataGridViewTextBoxColumn();
-            column3.HeaderText = "Task";
-            column3.DataPropertyName = "Task";
-            column3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            var column3 = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Task",
+                DataPropertyName = "Task",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            };
             _todoGrid.Columns.Add(column3);
         }
 
@@ -61,14 +67,22 @@ namespace TodoManager
         private void TodoLists_ListChanged(object sender, ListChangedEventArgs e)
         {
             AdjustGridSelection(_todoListGrid, e);
-            if (e.ListChangedType == ListChangedType.ItemAdded)
-            {
-                _removeListButton.Enabled = true;
-            }
-            else if (e.ListChangedType == ListChangedType.ItemDeleted && _model.BindableLists.Count == 0)
-            {
-                _removeListButton.Enabled = false;
-                _addTodoButton.Enabled = false;
+            switch (e.ListChangedType)
+            { 
+                case ListChangedType.ItemAdded:
+                    _removeListButton.Enabled = true;
+                    break;
+
+                case ListChangedType.ItemDeleted:
+                    if (_model.BindableLists.Count == 0)
+                    {
+                        _removeListButton.Enabled = false;
+                        _addTodoButton.Enabled = false;
+                    }
+                    break;
+
+                case ListChangedType.ItemChanged:
+                    break;
             }
         }
 
@@ -86,10 +100,6 @@ namespace TodoManager
                     int index = e.NewIndex < grid.Rows.Count ? e.NewIndex : grid.Rows.Count - 1;
                     grid.Rows[index].Selected = true;
                 }
-            }
-            else
-            {
-                throw new InvalidOperationException("Unrecognized list change type.");
             }
         }
 

@@ -11,6 +11,30 @@ namespace TodoManager.Models
 {
     public abstract class PersistentBindingList<T> : BindingList<T>
     {
+        private readonly bool _loading;
+
+        public PersistentBindingList()
+        {
+        }
+
+        public PersistentBindingList(IList<T> items)
+        {
+            ParameterValidator.CheckNull(items, "items");
+            try
+            {
+                _loading = true;
+                foreach (var item in items)
+                {
+                    // must use Add (not Items.Add()) for bindings to work correctly
+                    Add(item);
+                }
+            }
+            finally
+            {
+                _loading = false;
+            }
+        }
+
         protected override async void InsertItem(int index, T item)
         {
             if (index != Count)
@@ -19,9 +43,10 @@ namespace TodoManager.Models
                 throw new NotSupportedException("Insert not supported.");
             }
 
-            T persistedItem = await AddToStoreAsync(item);
+            // do not go to the server if we are initially loading list
+            T newItem = _loading ? item : await AddToStoreAsync(item);
 
-            base.InsertItem(index, persistedItem);
+            base.InsertItem(index, newItem);
         }
 
         protected abstract Task<T> AddToStoreAsync(T item);
@@ -45,5 +70,16 @@ namespace TodoManager.Models
         }
 
         protected abstract Task RemoveAllFromStoreAsync();
+
+        protected override async void OnListChanged(ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemChanged)
+            {
+                await UpdateStoreAsync(Items[e.NewIndex]);
+            }
+            base.OnListChanged(e);
+        }
+
+        protected abstract Task UpdateStoreAsync(T item);
     }
 }
