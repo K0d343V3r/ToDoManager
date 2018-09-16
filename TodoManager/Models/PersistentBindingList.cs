@@ -9,7 +9,7 @@ using TodoManager.Helpers;
 
 namespace TodoManager.Models
 {
-    public class PersistentBindingList<T> : BindingList<T>
+    public abstract class PersistentBindingList<T> : BindingList<T>
     {
         protected override async void InsertItem(int index, T item)
         {
@@ -24,12 +24,7 @@ namespace TodoManager.Models
             base.InsertItem(index, persistedItem);
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task<T> AddToStoreAsync(T item)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-        {
-            throw new NotImplementedException("AddToStoreAsync must be handled by subclass.");
-        }
+        protected abstract Task<T> AddToStoreAsync(T item);
 
         protected override async void RemoveItem(int index)
         {
@@ -41,12 +36,7 @@ namespace TodoManager.Models
             base.RemoveItem(index);
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task RemoveFromStoreAsync(T item)
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-        {
-            throw new NotImplementedException("RemoveFromStoreAsync must be handled by subclass.");
-        }
+        protected abstract Task RemoveFromStoreAsync(T item);
 
         protected override async void ClearItems()
         {
@@ -54,11 +44,6 @@ namespace TodoManager.Models
             base.ClearItems();
         }
 
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        protected virtual async Task RemoveAllFromStoreAsync()
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
-        {
-            throw new NotImplementedException("RemoveAllFromStoreAsync must be handled by subclass.");
-        }
+        protected abstract Task RemoveAllFromStoreAsync();
     }
 }
