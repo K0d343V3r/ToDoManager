@@ -92,7 +92,7 @@ namespace TodoManager.Models
             T newItem = await UpdateStoreAsync(item);
 
             // insert newly created item
-            base.SetItem(index, item);
+            base.SetItem(index, newItem);
         }
     }
 }
