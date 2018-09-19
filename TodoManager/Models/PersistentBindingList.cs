@@ -78,6 +78,21 @@ namespace TodoManager.Models
             base.OnListChanged(e);
         }
 
-        protected abstract Task UpdateStoreAsync(T item);
+        protected abstract Task<T> UpdateStoreAsync(T item);
+
+        protected override async void SetItem(int index, T item)
+        {
+            // remove existing item at location
+            await RemoveFromStoreAsync(Items[index]);
+
+            // set position for new item
+            item.Position = index;
+
+            // add new item at position
+            T newItem = await UpdateStoreAsync(item);
+
+            // insert newly created item
+            base.SetItem(index, item);
+        }
     }
 }

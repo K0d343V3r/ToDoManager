@@ -39,9 +39,11 @@ namespace TodoManager.Models
             await _proxy.DeleteListsAsync(ids);
         }
 
-        protected override async Task UpdateStoreAsync(TodoList item)
+        protected override async Task<TodoList> UpdateStoreAsync(TodoList item)
         {
-            var result = await _proxy.UpdateListAsync(item.Id, item);
+            var newItem = await _proxy.UpdateListAsync(item.Id, item);
+            newItem.BindableItems = new TodoListItemBindingList(newItem.Id, newItem.Items);
+            return newItem;
         }
     }
 }

@@ -41,9 +41,9 @@ namespace TodoManager.Models
             await _proxy.DeleteItemsAsync(ids);
         }
 
-        protected override async Task UpdateStoreAsync(TodoListItem item)
+        protected override async Task<TodoListItem> UpdateStoreAsync(TodoListItem item)
         {
-            await _proxy.UpdateItemAsync(item.Id, item);
+            return await _proxy.UpdateItemAsync(item.Id, item);
         }
     }
 }
