@@ -6,10 +6,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using TodoManager.Helpers;
+using TodoManager.Proxies;
 
 namespace TodoManager.Models
 {
-    public abstract class PersistentBindingList<T> : BindingList<T>
+    public abstract class PersistentBindingList<T> : BindingList<T> where T : ISortable
     {
         private readonly bool _loading;
 
@@ -37,11 +38,8 @@ namespace TodoManager.Models
 
         protected override async void InsertItem(int index, T item)
         {
-            if (index != Count)
-            {
-                // we only append at this stage
-                throw new NotSupportedException("Insert not supported.");
-            }
+            // set position for new item
+            item.Position = index;
 
             // do not go to the server if we are initially loading list
             T newItem = _loading ? item : await AddToStoreAsync(item);

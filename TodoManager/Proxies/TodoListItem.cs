@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TodoManager.Proxies
 {
-    public partial class TodoListItem
+    public partial class TodoListItem : ISortable
     {
         public TodoListItem(string task)
         {

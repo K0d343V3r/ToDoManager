@@ -9,7 +9,7 @@ using TodoManager.Models;
 
 namespace TodoManager.Proxies
 {
-    public partial class TodoList
+    public partial class TodoList : ISortable
     {
         public TodoListItemBindingList BindableItems { get; set; }
 
