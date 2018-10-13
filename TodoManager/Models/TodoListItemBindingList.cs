@@ -9,14 +9,14 @@ namespace TodoManager.Models
 {
     public class TodoListItemBindingList : PersistentBindingList<TodoListItem>
     {
-        private readonly long _todoListId;
+        private readonly int _todoListId;
         private TodoItemsProxy _proxy = new TodoItemsProxy(HttpClient.Instance);
 
         public TodoListItemBindingList() : base()
         {
         }
 
-        public TodoListItemBindingList(long todoListId, IList<TodoListItem> items)
+        public TodoListItemBindingList(int todoListId, IList<TodoListItem> items)
             : base(items)
         {
             _todoListId = todoListId;
